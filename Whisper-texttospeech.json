@@ -1,0 +1,77 @@
+{
+  "name": "Whisper-texttospeech",
+  "nodes": [
+    {
+      "parameters": {
+        "command": "python3 /Users/shriyansnayak/Downloads/transcribe_translate.py \"/Users/shriyansnayak/Downloads/Hindi-test-audio.wav\"\n"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "d77721f9-88e9-4b99-a74d-be49bdaa3809",
+      "name": "Execute Command"
+    },
+    {
+      "parameters": {
+        "jsCode": "try {\n  const out = JSON.parse($node[\"Execute Command\"].json.stdout);\n  return [\n    {\n      json: out\n    }\n  ];\n} catch (e) {\n  return [\n    {\n      json: {\n        error: \"Failed to parse output\",\n        stdout: $node[\"Execute Command\"].json.stdout\n      }\n    }\n  ];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "8b59eff2-9fc4-4313-b055-512d000a2455",
+      "name": "Output"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ba687580-19de-436c-aa56-072d6bc91e15",
+      "name": "Start"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute Command": {
+      "main": [
+        [
+          {
+            "node": "Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Execute Command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "006c603b-855a-40f5-bcea-ef51834c502a",
+  "meta": {
+    "instanceId": "99977213c246a3a0314ca1be2bae54c5981421069abed0fe99d93f14629336c4"
+  },
+  "id": "nuLXXnW7NpsyjY0r",
+  "tags": []
+}
